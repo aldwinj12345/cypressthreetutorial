@@ -3,16 +3,16 @@ const { defineConfig } = require("cypress");
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter', //for html report
   reporterOptions: {
-    charts: true,
-    reportPageTitle: 'orangehrm',
-    embeddedScreenshots: true,
-    inlineAssets: true,
-    saveAllAttempts: false,
+    //charts: true,
+    //reportPageTitle: 'orangehrm',
+    //embeddedScreenshots: true,
+    //inlineAssets: true,
+    //saveAllAttempts: false,
     overwrite: false,
     html: false,
-    json: true,
-    timestamp: 'yyyymmdd__HH_MM_ss',
-    reportFilename: 'my_updated_report' // Your desired filename (without the .html extension)
+    json: true
+    //timestamp: 'yyyymmdd__HH_MM_ss',
+    //reportFilename: 'my_updated_report' // Your desired filename (without the .html extension)
   },
   e2e: {
     setupNodeEvents(on, config) {
