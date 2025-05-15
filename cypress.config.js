@@ -8,6 +8,9 @@ module.exports = defineConfig({
     embeddedScreenshots: true,
     inlineAssets: true,
     saveAllAttempts: false,
+    overwrite: false,
+    html: false,
+    json: true,
     timestamp: 'yyyymmdd__HH_MM_ss',
     reportFilename: 'my_updated_report' // Your desired filename (without the .html extension)
   },
