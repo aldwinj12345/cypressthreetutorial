@@ -10,7 +10,6 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
-      screenshotOnRunFailure: true; // this will take screenshot when fail test case
       require('cypress-mochawesome-reporter/plugin')(on); //html report
 
       // Register the 'failed' task handler for cypress-mochawesome-reporter (likely)
@@ -27,7 +26,5 @@ module.exports = defineConfig({
       runMode: 2, // Configure retries for `cypress run`
       openMode: 0, // Configure retries for `cypress open`
     },
-    video: true, // Enable video recording for `cypress run`
-    videoCompression: false,
   },
 });
