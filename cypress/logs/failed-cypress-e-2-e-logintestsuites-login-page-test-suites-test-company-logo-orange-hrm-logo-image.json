@@ -1,0 +1,16 @@
+{
+  "specName": "cypress\\e2e\\logintestsuites.cy.js",
+  "title": "Test Company Logo: OrangeHRM Logo Image",
+  "suiteName": "Login Page Test Suites",
+  "testName": "Login Page Test Suites Test Company Logo: OrangeHRM Logo Image",
+  "testError": "Timed out retrying after 4000ms: Expected to find element: `.orangehrm-login-branding > img`, but never found it.",
+  "testCommands": [
+    "visit https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
+    "url ",
+    "assert expected **https://opensource-demo.orangehrmlive.com/web/index.php/auth/login** to include **/auth/login**",
+    "request ",
+    "log Running test: should pass",
+    "get .orangehrm-login-branding > img",
+    "assert expected **.orangehrm-login-branding > img** to be **visible**"
+  ]
+}

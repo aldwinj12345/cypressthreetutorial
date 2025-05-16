@@ -3,13 +3,12 @@
   "title": "Test Login Form Text Elements",
   "suiteName": "Login Page Test Suites",
   "testName": "Login Page Test Suites Test Login Form Text Elements",
-  "testError": "Timed out retrying after 4000ms: Expected to find content: 'Loginsss' within the element: <h5.oxd-text.oxd-text--h5.orangehrm-login-title> but never did.",
+  "testError": "Timed out retrying after 4000ms: Expected to find element: `div > h5`, but never found it.",
   "testCommands": [
     "visit https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
     "url ",
     "assert expected **https://opensource-demo.orangehrmlive.com/web/index.php/auth/login** to include **/auth/login**",
     "request ",
-    "get div > h5",
-    "contains Loginsss"
+    "get div > h5"
   ]
 }
