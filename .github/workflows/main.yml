@@ -46,6 +46,6 @@ jobs:
         with:
           name: Cypress Videos ${{ matrix.browsers }}
           path: cypress/videos
-            path: cypress/reports/${{ matrix.browsers }}
+         
 
 
