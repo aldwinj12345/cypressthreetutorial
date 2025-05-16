@@ -27,7 +27,7 @@ jobs:
         run: ls -lR cypress/mochawesome-report
       - name: Merge Mochawesome Reports
         if: always()
-        run: npx mochawesome-merge "cypress/mochawesome-report/*.json" > cypress/reports/html/merged-reports-${{ matrix.browsers }}.json
+        run: npx mochawesome-merge "cypress/mochawesome-report/mochawesome.json" > cypress/reports/html/merged-reports-${{ matrix.browsers }}.json
       - name: Generate HTML Reports
         if: always()
         run: |
