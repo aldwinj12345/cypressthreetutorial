@@ -1,23 +1,23 @@
-const { defineConfig } = require('cypress')
+const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      // ... other setupNodeEvents code
     },
     retries: {
       runMode: 2,
       openMode: 0,
     },
-    screenshotOnRunFailure: true, //this would enable when test fail
-    video: true, //enable video recording
-    videoCompression: false, //optional: this means disbaling compression for better quality
-    videoUploadOnPasses: false, //only upload videos for failed tests
+    screenshotOnRunFailure: true,
+    video: true,
+    videoUploadOnPasses: false,
   },
   reporter: 'mochawesome',
   reporterOptions: {
     overwrite: false,
     html: false,
     json: true,
+    reportDir: 'cypress/reports/${{ matrix.browsers }}', // Ensure this matches your workflow path
   },
-})
+});
