@@ -14,36 +14,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
       - name: Cypress run in ${{ matrix.browsers }}
         uses: cypress-io/github-action@v6
         with:
           browser: ${{ matrix.browsers }}
-          reporter: 'cypress-mochawesome-reporter' # Explicitly set the reporter
-          reporterOptions: 'reportDir=cypress/reports/${{ matrix.browsers }}/.jsons,overwrite=false,html=false,json=true'
-          
+          reporter: 'cypress-mochawesome-reporter'
+          reporterOptions: 'reportDir=cypress/mochawesome-report,overwrite=false,html=false,json=true'
       - name: Merge Mochawesome Reports
-        run: npx mochawesome-merge "cypress/reports/html/.jsons/*.json" > cypress/reports/html/merged-reports-${{ matrix.browsers }}.json
-      
+        run: npx mochawesome-merge "cypress/mochawesome-report/*.json" > cypress/reports/html/merged-reports-${{ matrix.browsers }}.json
       - name: Generate HTML Reports
         run: |
-          echo "Generating HTML report for ${{ matrix.browsers }}"npx marge cypress/reports/html/merged-reports-${{ matrix.browsers }}.json --reportDir cypress/reports/html -f "${{ matrix.browsers }}-report.html"echo "HTML report generation complete."
+          echo "Generating HTML report for ${{ matrix.browsers }}"
+          npx marge cypress/reports/html/merged-reports-${{ matrix.browsers }}.json --reportDir cypress/reports/html -f "${{ matrix.browsers }}-report.html"
+          echo "HTML report generation complete."
       - name: List Report Directory Contents
         run: ls -l cypress/reports/html
-      
       - name: Upload HTML Reports
         uses: actions/upload-artifact@v4
         with:
           name: Cypress HTML Report ${{ matrix.browsers }}
           path: cypress/reports/html
-          
       - name: Upload Screenshots on Failure
         uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: Cypress Screenshots ${{ matrix.browsers }}
           path: cypress/screenshots
-          
       - name: Upload Videos on Failure
         uses: actions/upload-artifact@v4
         if: failure()
