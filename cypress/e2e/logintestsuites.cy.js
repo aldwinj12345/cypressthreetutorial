@@ -9,6 +9,7 @@ beforeEach('Initialize baseUrl for each test',()=>{
 
 describe('Login Page Test Suites',()=>{
     it('Test Company Logo: OrangeHRM Logo Image',()=>{
+        cy.log('Running test: should pass');
         cy.get(loginpage.orangehrmlogo)
           .should('be.visible')
           .should(([img])=>{
@@ -54,6 +55,7 @@ describe('Login Page Test Suites',()=>{
           .contains('Invalid credentials')
     })
     it('Test Invalid Login: Empty Username, Empty Password',()=>{
+        cy.log('Running test: should be skipped');
         //click login button
         loginpage.clickLoginSubmitbutton()
 

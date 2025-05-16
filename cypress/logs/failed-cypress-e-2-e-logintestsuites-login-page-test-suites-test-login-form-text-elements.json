@@ -1,0 +1,15 @@
+{
+  "specName": "cypress\\e2e\\logintestsuites.cy.js",
+  "title": "Test Login Form Text Elements",
+  "suiteName": "Login Page Test Suites",
+  "testName": "Login Page Test Suites Test Login Form Text Elements",
+  "testError": "Timed out retrying after 4000ms: Expected to find content: 'Loginsss' within the element: <h5.oxd-text.oxd-text--h5.orangehrm-login-title> but never did.",
+  "testCommands": [
+    "visit https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
+    "url ",
+    "assert expected **https://opensource-demo.orangehrmlive.com/web/index.php/auth/login** to include **/auth/login**",
+    "request ",
+    "get div > h5",
+    "contains Loginsss"
+  ]
+}
