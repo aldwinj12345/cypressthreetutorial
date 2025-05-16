@@ -22,6 +22,9 @@ jobs:
       - name: Create Report Directory
         if: always()
         run: mkdir -p cypress/reports/html
+      - name: List Mochawesome Report Directory
+        if: always()
+        run: ls -lR cypress/mochawesome-report
       - name: Merge Mochawesome Reports
         if: always()
         run: npx mochawesome-merge "cypress/mochawesome-report/*.json" > cypress/reports/html/merged-reports-${{ matrix.browsers }}.json
