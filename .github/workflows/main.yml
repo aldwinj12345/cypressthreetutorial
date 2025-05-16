@@ -21,7 +21,8 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: ${{ matrix.browsers }}
-          command: npx cypress run --browser ${{ matrix.browsers }} --reporter mochawesome --reporter-options reportDir=cypress/reports/${{ matrix.browsers }},overwrite=false,html=false,json=true
+          reporter: mochawesome
+          reporterOptions: reportDir=cypress/reports/${{ matrix.browsers }},overwrite=false,html=false,json=true
 
       - name: Merge Mochawesome Reports
         run: npx mochawesome-merge "cypress/reports/${{ matrix.browsers }}/*.json" > "cypress/reports/${{ matrix.browsers }}/merged-reports.json"
