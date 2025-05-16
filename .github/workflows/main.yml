@@ -6,7 +6,7 @@ on:
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -19,6 +19,9 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: ${{ matrix.browsers }}
+      - name: Create Report Directory
+        if: always()
+        run: mkdir -p cypress/reports/html
       - name: Merge Mochawesome Reports
         if: always()
         run: npx mochawesome-merge "cypress/mochawesome-report/*.json" > cypress/reports/html/merged-reports-${{ matrix.browsers }}.json
