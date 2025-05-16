@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browsers: [chrome]
+        browsers: [chrome, firefox, edge]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,6 +23,9 @@ jobs:
       - name: List Mochawesome Report Directory (Attempt 2)
         if: always()
         run: ls -lR cypress/mochawesome-report || true
+      - name: Create Report Directory
+        if: always()
+        run: mkdir -p cypress/reports/html
       - name: Merge Mochawesome Reports (Attempt 2)
         if: always()
         run: npx mochawesome-merge "cypress/mochawesome-report/mochawesome.json" > cypress/reports/html/merged-reports-${{ matrix.browsers }}.json || true
