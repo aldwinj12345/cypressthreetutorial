@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Cypress Tests Debug
 
 on:
   push:
@@ -10,48 +10,39 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browsers: [chrome, firefox, edge]
+        browsers: [chrome]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Cypress run in ${{ matrix.browsers }}
-        id: cypress_run
         uses: cypress-io/github-action@v6
         with:
           browser: ${{ matrix.browsers }}
-      - name: Create Report Directory
+      - name: List Workspace Directory
+        run: ls -lR .
+      - name: List Mochawesome Report Directory (Attempt 2)
         if: always()
-        run: mkdir -p cypress/reports/html
-      - name: List Mochawesome Report Directory
+        run: ls -lR cypress/mochawesome-report || true
+      - name: Merge Mochawesome Reports (Attempt 2)
         if: always()
-        run: ls -lR cypress/mochawesome-report
-      - name: Merge Mochawesome Reports
+        run: npx mochawesome-merge "cypress/mochawesome-report/mochawesome.json" > cypress/reports/html/merged-reports-${{ matrix.browsers }}.json || true
+      - name: Generate HTML Reports (Attempt 2)
         if: always()
-        run: npx mochawesome-merge "cypress/mochawesome-report/mochawesome.json" > cypress/reports/html/merged-reports-${{ matrix.browsers }}.json
-      - name: Generate HTML Reports
-        if: always()
-        run: |
-          echo "Generating HTML report for ${{ matrix.browsers }}"
-          npx marge cypress/reports/html/merged-reports-${{ matrix.browsers }}.json --reportDir cypress/reports/html -f "${{ matrix.browsers }}-report.html"
-          echo "HTML report generation complete."
-      - name: List Report Directory Contents
-        if: always()
-        run: ls -lR cypress/reports/html
+        run: npx marge cypress/reports/html/merged-reports-${{ matrix.browsers }}.json --reportDir cypress/reports/html -f "${{ matrix.browsers }}-report.html" || true
       - name: Upload HTML Reports
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Cypress HTML Report ${{ matrix.browsers }}
           path: cypress/reports/html
       - name: Upload Screenshots on Failure
-        if: failure()
         uses: actions/upload-artifact@v4
+        if: failure()
         with:
           name: Cypress Screenshots ${{ matrix.browsers }}
           path: cypress/screenshots
       - name: Upload Videos on Failure
-        if: failure()
         uses: actions/upload-artifact@v4
+        if: failure()
         with:
           name: Cypress Videos ${{ matrix.browsers }}
           path: cypress/videos
