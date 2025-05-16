@@ -1,0 +1,50 @@
+{
+  "reporterEnabled": "cypress-mochawesome-reporter, mocha-junit-reporter",
+  "cypressMochawesomeReporterReporterOptions": {
+    "reportDir": "cypress/mochawesome-report",
+    "overwrite": false,
+    "html": true,
+    "json": true,
+    "jsonFilename": "mochawesome",
+    "timestamp": false
+  },
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "cypress/junit_report/results-[hash].xml",
+    "toConsole": false,
+    "outputs": true,
+    "attachments": true,
+    "testCaseSwitchClassnameAndName": true,
+    "suiteSwitchCaseAndName": true,
+    "includeCustomProperties": true,
+    "addFileAttribute": "testCase",
+    "outputsDir": "cypress/junit_report",
+    "reportFilename": null,
+    "rootSuiteTitle": "Cypress Tests",
+    "jenkinsMode": false,
+    "useFullSuiteTitle": true,
+    "testsuitesTitle": "Test Suites",
+    "useStdout": false,
+    "properties": null,
+    "suiteTitleSeparatedBy": " - ",
+    "whenDone": (report) => {
+      // This function will be executed after the JUnit report is generated
+      // We can use it to create a simple JSON summary for mochawesome-merge
+      const summary = {
+        stats: report.stats,
+        results: report.results.map(suite => ({
+          title: suite.title,
+          tests: suite.tests.map(test => ({
+            title: test.title,
+            state: test.state
+          }))
+        }))
+      };
+      const fs = require('fs');
+      const jsonReportDir = 'cypress/mochawesome-report';
+      if (!fs.existsSync(jsonReportDir)) {
+        fs.mkdirSync(jsonReportDir, { recursive: true });
+      }
+      fs.writeFileSync(`${jsonReportDir}/mochawesome.json`, JSON.stringify(summary));
+    }
+  }
+}
