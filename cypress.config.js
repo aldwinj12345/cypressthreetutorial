@@ -5,9 +5,9 @@ module.exports = defineConfig({
   reporterOptions: {
     reportDir: 'cypress/mochawesome-report',
     overwrite: false,
-    html: true, // Set this to true to ensure HTML report is generated
-    json: true, // Keep this true to generate the JSON report
-    jsonFilename: 'mochawesome', // Optional: set a specific filename for the JSON report
+    html: true, // Ensure HTML report is generated
+    json: true, // Ensure JSON report is generated
+    jsonFilename: 'mochawesome', // Set a specific filename for the JSON report
     timestamp: false, // Optional: remove timestamp from filename
   },
   e2e: {
