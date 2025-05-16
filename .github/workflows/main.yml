@@ -15,9 +15,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Dependencies
-        run: npm install
-
       # Install npm dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run in ${{ matrix.browsers }}
