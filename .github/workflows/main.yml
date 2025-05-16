@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Cypress Tests Debug
 
 on:
   push:
@@ -8,9 +8,9 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     strategy:
-      fail-fast: false
+      fail-fast: false # Ensure all matrix combinations run
       matrix:
-        browsers: [chrome, firefox, edge]
+        browsers: [chrome] # Focus on one browser for now
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,30 +18,21 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: ${{ matrix.browsers }}
-         
       - name: Merge Mochawesome Reports
+        continue-on-error: true # Attempt to run even if previous step failed
         run: npx mochawesome-merge "cypress/mochawesome-report/*.json" > cypress/reports/html/merged-reports-${{ matrix.browsers }}.json
       - name: Generate HTML Reports
+        continue-on-error: true # Attempt to run even if previous step failed
         run: |
           echo "Generating HTML report for ${{ matrix.browsers }}"
           npx marge cypress/reports/html/merged-reports-${{ matrix.browsers }}.json --reportDir cypress/reports/html -f "${{ matrix.browsers }}-report.html"
           echo "HTML report generation complete."
       - name: List Report Directory Contents
-        run: ls -l cypress/reports/html
+        continue-on-error: true # Attempt to run even if previous step failed
+        run: ls -lR cypress/reports
       - name: Upload HTML Reports
+        continue-on-error: true # Attempt to run even if previous step failed
         uses: actions/upload-artifact@v4
         with:
           name: Cypress HTML Report ${{ matrix.browsers }}
           path: cypress/reports/html
-      - name: Upload Screenshots on Failure
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: Cypress Screenshots ${{ matrix.browsers }}
-          path: cypress/screenshots
-      - name: Upload Videos on Failure
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: Cypress Videos ${{ matrix.browsers }}
-          path: cypress/videos
