@@ -18,7 +18,7 @@ describe('Login Page Test Suites',()=>{
           })
     })
     it('Test Login Form Text Elements',()=>{
-        cy.get(loginpage.loginformtitle).contains('Loginsss')
+        cy.get(loginpage.loginformtitle).contains('Login')
         cy.get(loginpage.usernamelabel).contains('Username')
         cy.get(loginpage.passwordlabel).contains('Password')
     })
@@ -55,7 +55,6 @@ describe('Login Page Test Suites',()=>{
           .contains('Invalid credentials')
     })
     it('Test Invalid Login: Empty Username, Empty Password',()=>{
-        cy.log('Running test: should be skipped');
         //click login button
         loginpage.clickLoginSubmitbutton()
 
