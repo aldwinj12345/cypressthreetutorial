@@ -1,4 +1,4 @@
-name: Cypress Tests Debug
+name: Cypress Tests
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -15,35 +15,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Cypress run in ${{ matrix.browsers }}
+        id: cypress_run
         uses: cypress-io/github-action@v6
         with:
           browser: ${{ matrix.browsers }}
       - name: Merge Mochawesome Reports
-        continue-on-error: true
+        if: always()
         run: npx mochawesome-merge "cypress/mochawesome-report/*.json" > cypress/reports/html/merged-reports-${{ matrix.browsers }}.json
       - name: Generate HTML Reports
-        continue-on-error: true
+        if: always()
         run: |
           echo "Generating HTML report for ${{ matrix.browsers }}"
           npx marge cypress/reports/html/merged-reports-${{ matrix.browsers }}.json --reportDir cypress/reports/html -f "${{ matrix.browsers }}-report.html"
           echo "HTML report generation complete."
       - name: List Report Directory Contents
-        continue-on-error: true
+        if: always()
         run: ls -lR cypress/reports/html
       - name: Upload HTML Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Cypress HTML Report ${{ matrix.browsers }}
           path: cypress/reports/html
       - name: Upload Screenshots on Failure
-        uses: actions/upload-artifact@v4
         if: failure()
+        uses: actions/upload-artifact@v4
         with:
           name: Cypress Screenshots ${{ matrix.browsers }}
           path: cypress/screenshots
       - name: Upload Videos on Failure
-        uses: actions/upload-artifact@v4
         if: failure()
+        uses: actions/upload-artifact@v4
         with:
           name: Cypress Videos ${{ matrix.browsers }}
           path: cypress/videos
