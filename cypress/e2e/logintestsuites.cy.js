@@ -18,7 +18,7 @@ describe('Login Page Test Suites',()=>{
           })
     })
     it('Test Login Form Text Elements',()=>{
-        cy.get(loginpage.loginformtitle).contains('Login')
+        cy.get(loginpage.loginformtitle).contains('Loginsss')
         cy.get(loginpage.usernamelabel).contains('Username')
         cy.get(loginpage.passwordlabel).contains('Password')
     })
